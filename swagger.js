@@ -11,7 +11,7 @@ const options = {
     },
     servers: [
       {
-        url: "http://localhost:3000",
+        url: "https://spec-repo-1-ez1e.onrender.com",
       },
     ],
     tags: [
