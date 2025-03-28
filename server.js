@@ -4,10 +4,10 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const swaggerDocs = require('./swagger.js');
 
-const doctorRoutes = require('./routes/doctorRoutes.js');
-const productRoutes = require('./routes/shopProductsRoutes.js');
-const blogRoutes = require('./routes/blogRoutes.js');
-const authRoutes = require('./routes/authRoutes.js');
+const teacherRoutes = require('./routes/teacherRoutes.js');
+const projectRoutes = require('./routes/projectRoutes.js');
+const studentRoutes = require('./routes/studentRoutes.js');
+const calendarRoutes = require("./routes/calendarRoutes");
 
 const app = express();
 app.use(cors({
@@ -17,11 +17,12 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use("/uploads", express.static("uploads")); // Доступ к загруженным файлам
 
-app.use('/doctors', doctorRoutes);
-app.use('/products', productRoutes);
-app.use('/blogs', blogRoutes);
-app.use('/auth', authRoutes);
+app.use("/teachers", teacherRoutes);
+app.use("/projects", projectRoutes);
+app.use("/students", studentRoutes);
+app.use("/calendar", calendarRoutes);
 
 swaggerDocs(app);
 

@@ -1,0 +1,99 @@
+openapi: 3.0.0
+info:
+  title: Calendar API
+  version: 1.0.0
+  description: API for managing calendar entries
+tags:
+  - name: Calendar
+    description: Operations with the calendar
+paths:
+  /calendar:
+    post:
+      summary: Create a calendar entry
+      tags:
+        - Calendar
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                desc:
+                  type: string
+      responses:
+        "201":
+          description: Entry added
+        "400":
+          description: Validation error
+    get:
+      summary: Get all calendar entries
+      tags:
+        - Calendar
+      responses:
+        "200":
+          description: All entries retrieved successfully
+
+  /calendar/{id}:
+    get:
+      summary: Get an entry by ID
+      tags:
+        - Calendar
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Entry found
+        "404":
+          description: Entry not found
+
+    put:
+      summary: Update an entry
+      tags:
+        - Calendar
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                desc:
+                  type: string
+      responses:
+        "200":
+          description: Entry updated
+        "400":
+          description: Validation error
+        "404":
+          description: Entry not found
+
+    delete:
+      summary: Delete an entry
+      tags:
+        - Calendar
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Entry deleted
+        "404":
+          description: Entry not found

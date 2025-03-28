@@ -1,27 +1,33 @@
-const swaggerJsdoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
 
 const options = {
   definition: {
-    openapi: '3.0.0',
+    openapi: "3.0.0",
     info: {
-      title: 'Clinic API',
-      version: '1.0.0',
-      description: 'API для работы с докторами, товарами и блогами',
+      title: "Clinic API",
+      version: "1.0.0",
+      description: "API for crud with student,teacher,calendar,project",
     },
     servers: [
       {
-        url: 'https://spec-repo-1.onrender.com', 
+        url: "http://localhost:3000",
       },
     ],
+    tags: [
+      { name: "Students"},
+      { name: "Teachers"},
+      { name: "Calendar"},
+      { name: "Projects"},
+    ],
   },
-  apis: ['./docs/*.yaml'], 
+  apis: ["./docs/*.yaml"], 
 };
 
 const swaggerSpec = swaggerJsdoc(options);
 
 const swaggerDocs = (app) => {
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 };
 
 module.exports = swaggerDocs;

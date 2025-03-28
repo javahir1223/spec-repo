@@ -1,0 +1,108 @@
+openapi: 3.0.0
+info:
+  title: Teacher API
+  version: 1.0.0
+  description: API for managing teachers
+tags:
+  - name: Teachers
+    description: Operations with teachers
+paths:
+  /teachers:
+    post:
+      summary: Create a teacher
+      tags:
+        - Teachers
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                avatar:
+                  type: string
+                  format: binary
+                desc:
+                  type: string
+                profession:
+                  type: string
+      responses:
+        "201":
+          description: Teacher created successfully
+        "400":
+          description: Validation error
+    get:
+      summary: Get all teachers
+      tags:
+        - Teachers
+      responses:
+        "200":
+          description: Successfully retrieved all teachers
+
+  /teachers/{id}:
+    get:
+      summary: Get a teacher by ID
+      tags:
+        - Teachers
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Teacher found
+        "404":
+          description: Teacher not found
+
+    put:
+      summary: Update a teacher
+      tags:
+        - Teachers
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                avatar:
+                  type: string
+                desc:
+                  type: string
+                profession:
+                  type: string
+      responses:
+        "200":
+          description: Teacher updated successfully
+        "400":
+          description: Validation error
+        "404":
+          description: Teacher not found
+
+    delete:
+      summary: Delete a teacher
+      tags:
+        - Teachers
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Teacher deleted successfully
+        "404":
+          description: Teacher not found
