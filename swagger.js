@@ -7,7 +7,7 @@ const options = {
     info: {
       title: "Clinic API",
       version: "1.0.0",
-      description: "API for crud with student,teacher,calendar,project",
+      description: "API for CRUD with students, teachers, calendar, projects",
     },
     servers: [
       {
@@ -15,13 +15,27 @@ const options = {
       },
     ],
     tags: [
-      { name: "Students"},
-      { name: "Teachers"},
-      { name: "Calendar"},
-      { name: "Projects"},
+      { name: "Auth" },
+      { name: "Students" },
+      { name: "Teachers" },
+      { name: "Calendar" },
+      { name: "Projects" },
+    ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [],
+      },
     ],
   },
-  apis: ["./docs/*.yaml"], 
+  apis: ["./docs/*.yaml"],
 };
 
 const swaggerSpec = swaggerJsdoc(options);
