@@ -8,6 +8,7 @@ const teacherRoutes = require('./routes/teacherRoutes.js');
 const projectRoutes = require('./routes/projectRoutes.js');
 const studentRoutes = require('./routes/studentRoutes.js');
 const calendarRoutes = require("./routes/calendarRoutes");
+const authRoutes = require('./routes/authRoutes.js');
 
 const app = express();
 app.use(cors({
@@ -23,6 +24,7 @@ app.use("/teachers", teacherRoutes);
 app.use("/projects", projectRoutes);
 app.use("/students", studentRoutes);
 app.use("/calendar", calendarRoutes);
+app.use('/auth', authRoutes);
 
 swaggerDocs(app);
 

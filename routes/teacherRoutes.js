@@ -6,15 +6,16 @@ const {
   updateTeacher,
   deleteTeacher
 } = require("../controllers/teacherController");
+const { verifyAdmin } = require('../middlewares/auth.middleware');
 
 const upload = require("../middlewares/upload");
 
 const router = express.Router();
 
-router.post("/", upload.single("avatar"), createTeacher); // Создать учителя
+router.post("/", verifyAdmin, upload.single("avatar"), createTeacher); // Создать учителя
 router.get("/", getAllTeachers); // Получить всех учителей
 router.get("/:id", getTeacherById); // Получить учителя по ID
-router.put("/:id", upload.single("avatar"), updateTeacher); // Обновить учителя
-router.delete("/:id", deleteTeacher); // Удалить учителя
+router.put("/:id",verifyAdmin,  upload.single("avatar"), updateTeacher); // Обновить учителя
+router.delete("/:id",verifyAdmin, deleteTeacher); // Удалить учителя
 
 module.exports = router;

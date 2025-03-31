@@ -6,15 +6,16 @@ const {
   updateProject,
   deleteProject
 } = require("../controllers/projectController");
+const { verifyAdmin } = require('../middlewares/auth.middleware');
 
 const upload = require("../middlewares/upload");
 
 const router = express.Router();
 
-router.post("/", upload.single("avatar"), createProject); // Создать проект
+router.post("/",verifyAdmin, upload.single("avatar"), createProject); // Создать проект
 router.get("/", getAllProjects); // Получить все проекты
 router.get("/:id", getProjectById); // Получить проект по ID
-router.put("/:id", upload.single("avatar"), updateProject); // Обновить проект
-router.delete("/:id", deleteProject); // Удалить проект
+router.put("/:id",verifyAdmin, upload.single("avatar"), updateProject); // Обновить проект
+router.delete("/:id",verifyAdmin, deleteProject); // Удалить проект
 
 module.exports = router;

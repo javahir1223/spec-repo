@@ -6,11 +6,12 @@ const {
   updateEvent,
   deleteEvent
 } = require("../controllers/calendarController");
+const { verifyAdmin } = require('../middlewares/auth.middleware');
 
 const router = express.Router();
 
 // 🔹 Создать событие
-router.post("/", createEvent);
+router.post("/",verifyAdmin, createEvent);
 
 // 🔹 Получить все события
 router.get("/", getAllEvents);
@@ -19,9 +20,9 @@ router.get("/", getAllEvents);
 router.get("/:id", getEventById);
 
 // 🔹 Обновить событие
-router.put("/:id", updateEvent);
+router.put("/:id",verifyAdmin, updateEvent);
 
 // 🔹 Удалить событие
-router.delete("/:id", deleteEvent);
+router.delete("/:id",verifyAdmin, deleteEvent);
 
 module.exports = router;
