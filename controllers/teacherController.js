@@ -3,10 +3,9 @@ const Teacher = require("../models/Teacher");
 // 📌 Создать нового учителя
 exports.createTeacher = async (req, res) => {
   try {
-    const { name, desc, profession } = req.body;
-    const avatar = req.file ? req.file.path : null;
+    const { name, desc, profession,avatar } = req.body;
 
-    if (!name || !desc || !profession) {
+    if (!name || !desc || !profession || !avatar) {
       return res.status(400).json({ error: "All fields are required" });
     }
 
@@ -44,8 +43,7 @@ exports.getTeacherById = async (req, res) => {
 // 📌 Обновить учителя по ID
 exports.updateTeacher = async (req, res) => {
   try {
-    const { name, desc, profession } = req.body;
-    const avatar = req.file ? req.file.path : req.body.avatar;
+    const { name, desc, profession,avatar } = req.body;
 
     const updatedTeacher = await Teacher.findByIdAndUpdate(
       req.params.id,
@@ -70,5 +68,17 @@ exports.deleteTeacher = async (req, res) => {
     res.json({ message: "Teacher deleted", teacher: deletedTeacher });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+exports.fileUpload = async (req, res) => {
+  try {
+    const filePath = req.file.filename;
+    if (!filePath) {
+      return res.status(400).json({ message: "Fayl yuklanmadi!" });
+    }
+    res.status(201).json({ url: filePath });
+  } catch (error) {
+    res.status(500).json({ message: "Serverda xatolik bor" });
   }
 };
