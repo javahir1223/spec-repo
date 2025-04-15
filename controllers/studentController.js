@@ -3,10 +3,9 @@ const Student = require("../models/Student");
 // 📌 Создать нового студента
 exports.createStudent = async (req, res) => {
   try {
-    const { name, age, coins, email, birthdate, phoneNumber } = req.body;
-    const avatar = req.file ? req.file.path : null;
+    const { name, age, coins, email, birthdate, phoneNumber,avatar } = req.body;
 
-    if (!name || !age || !coins || !email || !birthdate || !phoneNumber) {
+    if (!name || !age || !coins || !email || !birthdate || !phoneNumber || !avatar) {
       return res.status(400).json({ error: "All fields are required" });
     }
 
@@ -44,8 +43,7 @@ exports.getStudentById = async (req, res) => {
 // 📌 Обновить студента по ID
 exports.updateStudent = async (req, res) => {
   try {
-    const { name, age, coins, email, birthdate, phoneNumber } = req.body;
-    const avatar = req.file ? req.file.path : req.body.avatar;
+    const { name, age, coins, email, birthdate, phoneNumber, avatar } = req.body;
 
     const updatedStudent = await Student.findByIdAndUpdate(
       req.params.id,
@@ -70,5 +68,17 @@ exports.deleteStudent = async (req, res) => {
     res.json({ message: "Student deleted", student: deletedStudent });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+exports.fileUpload = async (req, res) => {
+  try {
+    const filePath = req.file.filename;
+    if (!filePath) {
+      return res.status(400).json({ message: "Fayl yuklanmadi!" });
+    }
+    res.status(201).json({ url: filePath });
+  } catch (error) {
+    res.status(500).json({ message: "Serverda xatolik bor" });
   }
 };

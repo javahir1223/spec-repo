@@ -4,7 +4,8 @@ const {
   getAllStudents,
   getStudentById,
   updateStudent,
-  deleteStudent
+  deleteStudent,
+  fileUpload
 } = require("../controllers/studentController");
 const { verifyAdmin } = require('../middlewares/auth.middleware');
 
@@ -12,10 +13,11 @@ const upload = require("../middlewares/upload");
 
 const router = express.Router();
 
-router.post("/",verifyAdmin, upload.single("avatar"), createStudent); // Создать студента
+router.post("/", createStudent);
+router.post("/upload",upload.single("avatar"), fileUpload);
 router.get("/", getAllStudents); // Получить всех студентов
-router.get("/:id", getStudentById); // Получить студента по ID
-router.put("/:id",verifyAdmin, upload.single("avatar"), updateStudent); // Обновить студента
+router.get("/:id", getStudentById); 
+router.put("/:id",verifyAdmin, updateStudent);
 router.delete("/:id",verifyAdmin, deleteStudent); // Удалить студента
 
 module.exports = router;
